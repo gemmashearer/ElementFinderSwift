@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //outlets for UI elements
     
     @IBOutlet weak var enterElement: UITextField!
     @IBOutlet weak var massNumberLabel: UILabel!
@@ -18,6 +19,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var elementNameLabel: UILabel!
     
+    //variables which act as parameters for the updateUI function and allow the UILabels to be updated depending on which element has been entered
+    
     var element: String?
     var symbol = " "
     var massNumber = " "
@@ -25,7 +28,15 @@ class ViewController: UIViewController {
     var elementName = " "
     var unwrappedElement = " "
     
-    //need to get the resign first responder in there somewhere too
+    
+    // variables for the color scheme including the colors
+    var colorSchemeInteger:Int = 0
+    var pinkUI = UIColor(red: 247/255, green: 116/255, blue: 199/255, alpha: 1.0)
+    var orangeUI = UIColor(red: 247/255, green: 165/255, blue: 116/255, alpha: 1.0)
+    var blueUI = UIColor(red: 116/255, green: 199, blue: 247, alpha: 1.0)
+    var purpleUI = UIColor(red: 230/255, green: 116/255, blue: 247/255, alpha: 1.0)
+    
+ 
     
     func updateUI(symbol: String, massNumber: String, atomicNumber: String, elementName: String){
     //set massNumberLabel to be the mass number - need to get this from the case
@@ -41,6 +52,29 @@ class ViewController: UIViewController {
         
     //this function should update all the UI elements, assuming I have the parameters right
         
+    }
+    
+    
+    func changeColorScheme() {
+        //generate a random number
+        //change background color of the elementSymbolLabel and all the others will need to be done too due to my dodgy coding
+        //change the elementNameLabel color too
+        //change the button color
+        
+        colorSchemeInteger = Int(arc4random_uniform(13))
+        print(colorSchemeInteger)
+        
+        if colorSchemeInteger <= 3 {
+            elementSymbolLabel.backgroundColor = pinkUI
+            
+        } else if colorSchemeInteger <= 6 {
+            elementSymbolLabel.backgroundColor = orangeUI
+        } else if colorSchemeInteger <= 9 {
+            elementSymbolLabel.backgroundColor = blueUI
+            
+        } else {
+            elementSymbolLabel.backgroundColor = purpleUI
+        }
     }
     
    //need to get hold of the value entered in the enterElement text field and attach it to a variable
@@ -63,7 +97,8 @@ class ViewController: UIViewController {
     @IBAction func findMyElementButtonTapped(sender: UIButton) {
         
         //problem - the first responder has resigned but I need to get it back again
-       enterElement.resignFirstResponder()  
+       enterElement.resignFirstResponder()
+        changeColorScheme()
         
         if enterElement.text != nil {
             element = enterElement.text!
@@ -86,11 +121,12 @@ class ViewController: UIViewController {
         case "lithium", "li":
             updateUI("Li", massNumber: "6.9", atomicNumber: "3", elementName: "Lithium")
         default:
-            print("I don't see an element, try again")
+            updateUI("X", massNumber: "A", atomicNumber: "Z", elementName: "That's not an element, try again")
         }
         
         
     }
 
+   
 }
 
