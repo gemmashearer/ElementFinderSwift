@@ -12,12 +12,14 @@ class ViewController: UIViewController {
     
     //outlets for UI elements
     
+    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var enterElement: UITextField!
     @IBOutlet weak var massNumberLabel: UILabel!
     @IBOutlet weak var elementSymbolLabel: UILabel!
     @IBOutlet weak var atomicNumberLabel: UILabel!
-    
     @IBOutlet weak var elementNameLabel: UILabel!
+    @IBOutlet weak var findMyElementButton: UIButton!
     
     //variables which act as parameters for the updateUI function and allow the UILabels to be updated depending on which element has been entered
     
@@ -37,50 +39,48 @@ class ViewController: UIViewController {
     var purpleUI = UIColor(red: 230/255, green: 116/255, blue: 247/255, alpha: 1.0)
     
  
-    
+    //function tp update the UILabels depending on the parameters set by the case
     func updateUI(symbol: String, massNumber: String, atomicNumber: String, elementName: String){
-    //set massNumberLabel to be the mass number - need to get this from the case
-        //set elementSymbolLabel to be the element symbol - need to get this from the case
-        //set atomicNumberLabel to be the atomic number - get this from the case
-        //these all need to be the parameters
        massNumberLabel.text = massNumber
        elementSymbolLabel.text = symbol
        atomicNumberLabel.text = atomicNumber
        elementNameLabel.text = elementName
        elementNameLabel.hidden = false
-        
-        
-    //this function should update all the UI elements, assuming I have the parameters right
-        
     }
     
-    
+    //function to change the color of the UI elements based on a random number generated when the findMyElement button is pressed
     func changeColorScheme() {
-        //generate a random number
-        //change background color of the elementSymbolLabel and all the others will need to be done too due to my dodgy coding
-        //change the elementNameLabel color too
-        //change the button color
-        
-        colorSchemeInteger = Int(arc4random_uniform(13))
+    //this can probably call another function that has the uicolor as a parameter
+        colorSchemeInteger = Int(arc4random_uniform(100))
         print(colorSchemeInteger)
         
-        if colorSchemeInteger <= 3 {
+        if colorSchemeInteger <= 25 {
             elementSymbolLabel.backgroundColor = pinkUI
+            elementNameLabel.textColor = pinkUI
+            findMyElementButton.backgroundColor = pinkUI
+            titleLabel.shadowColor = pinkUI
             
-        } else if colorSchemeInteger <= 6 {
+        } else if colorSchemeInteger <= 50 {
             elementSymbolLabel.backgroundColor = orangeUI
-        } else if colorSchemeInteger <= 9 {
+            elementNameLabel.textColor = orangeUI
+             findMyElementButton.backgroundColor = orangeUI
+            titleLabel.shadowColor = orangeUI
+            
+        } else if colorSchemeInteger <= 75 {
             elementSymbolLabel.backgroundColor = blueUI
+            elementNameLabel.textColor = blueUI
+             findMyElementButton.backgroundColor = blueUI
+            titleLabel.shadowColor = blueUI
             
         } else {
             elementSymbolLabel.backgroundColor = purpleUI
+            elementNameLabel.textColor = purpleUI
+             findMyElementButton.backgroundColor = purpleUI
+            titleLabel.shadowColor = purpleUI
         }
     }
     
-   //need to get hold of the value entered in the enterElement text field and attach it to a variable
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,7 +93,9 @@ class ViewController: UIViewController {
     }
     
     
-
+    
+//contains the main logic that runs when the button is pressed. Takes the string entered into the text field (which can either be the elements name or chemical symbol then evaluates this and calls the uodateUI function with he relevant parameters in it. This also calls the changeColorScheme function
+    
     @IBAction func findMyElementButtonTapped(sender: UIButton) {
         
         //problem - the first responder has resigned but I need to get it back again
@@ -110,8 +112,7 @@ class ViewController: UIViewController {
             //do an alert which tells them they haven't entered an element
         }
         
-        //switch here
-        
+        //switch that evaluates the element entered
         switch  unwrappedElement {
         case "hydrogen", "h":
             updateUI("H", massNumber: "1.0", atomicNumber: "1", elementName: "Hydrogen")
@@ -121,12 +122,22 @@ class ViewController: UIViewController {
         case "lithium", "li":
             updateUI("Li", massNumber: "6.9", atomicNumber: "3", elementName: "Lithium")
         default:
-            updateUI("X", massNumber: "A", atomicNumber: "Z", elementName: "That's not an element, try again")
+            
+            updateUI("X", massNumber: "A", atomicNumber: "Z", elementName: "That's not an element")
+            showAlert()
+            //instead of this it will show an alert
         }
         
         
     }
 
+    func showAlert() {
+    let alert = UIAlertController(title: "Oops", message: "That's not an element in this universe", preferredStyle: .Alert)
+        let action = UIAlertAction(title: "Try Again", style: .Default, handler: nil)
+        
+    alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
+    }
    
 }
 

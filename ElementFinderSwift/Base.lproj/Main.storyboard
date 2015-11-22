@@ -80,7 +80,9 @@
                         <outlet property="elementNameLabel" destination="Ds3-Kf-aul" id="hab-D5-7Dc"/>
                         <outlet property="elementSymbolLabel" destination="vPu-1a-aMj" id="oCe-hv-Xj5"/>
                         <outlet property="enterElement" destination="4sD-C9-QME" id="fDn-U4-kLZ"/>
+                        <outlet property="findMyElementButton" destination="9hH-hp-hR3" id="4jD-wc-ceG"/>
                         <outlet property="massNumberLabel" destination="tkJ-8J-2F4" id="4hg-Tv-wDs"/>
+                        <outlet property="titleLabel" destination="qfZ-Vf-gHv" id="6YT-D7-Nme"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
